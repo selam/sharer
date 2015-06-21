@@ -2,7 +2,10 @@ var SDK_APP_ID = 'sdk_sharer_effe0d10e8';
 var PHOTO_EXTS = ['jpg', 'jpeg', 'png', 'tiff', 'tif', 'gif', 'bmp'];
 var IMGUR_CLIENT_ID = "9d2eb0468195340";
 
+
 InboxSDK.load('1', SDK_APP_ID).then(function(sdk){  
+    
+    
     var update_progress_bar = function(percentComplete) {
         document.getElementById("progress-bar").innerHTML = parseInt(percentComplete).toString() + '%';
         document.getElementById("progress-bar").style.width = parseInt(percentComplete).toString() + '%';
@@ -31,7 +34,7 @@ InboxSDK.load('1', SDK_APP_ID).then(function(sdk){
                     attachment_card.addButton({
                         iconUrl: chrome.runtime.getURL('images/white_sharer48.png'),
                         tooltip: chrome.i18n.getMessage('saver_button_tooltip'),
-                        onClick: function(event) {
+                        onClick: function(event) {                            
                             var modal;
                             var xhr = new XMLHttpRequest();
                             xhr.responseType = 'blob';
@@ -53,6 +56,7 @@ InboxSDK.load('1', SDK_APP_ID).then(function(sdk){
                                     var formData = new FormData();                                    
                                     formData.append("image", xhr.response);
                                     // Download finish    
+                                    
                                     var uploader =  new XMLHttpRequest();
                                     uploader.onloadstart = function(e){
                                         document.getElementById('progress-title').innerHTML = chrome.i18n.getMessage('uploading');
@@ -61,15 +65,17 @@ InboxSDK.load('1', SDK_APP_ID).then(function(sdk){
                                     uploader.onload = function() {
                                         if(uploader.status == 200) {
                                             resp = JSON.parse(uploader.response);
-                                            chrome.extension.sendRequest({url: resp.data.link}, function(response) {
+                                            chrome.extension.sendRequest({command: 'create-tab', url: resp.data.link}, function(response) {
                                                 modal.close();
                                                 sdk.ButterBar.showMessage({
                                                     text: chrome.i18n.getMessage("successfuly_uploaded")
                                                 });
+                                                chrome.extension.sendRequest({command: '_trackEvent', eventName: 'upload-imgur', eventStatus: 'success'}, function(response){});
                                             });                                      
                                         } else { // if uploader.status neq 200
                                             modal.close();
-                                            something_went_wrong();
+                                            something_went_wrong();                                            
+                                            chrome.extension.sendRequest({command: '_trackEvent', eventName: 'upload-imgur', eventStatus: 'fail'}, function(response){});
                                         }                                                                                
                                     };
                                     uploader.upload.onprogress = function(evt){
@@ -81,13 +87,16 @@ InboxSDK.load('1', SDK_APP_ID).then(function(sdk){
                                     uploader.open("POST", "https://api.imgur.com/3/upload");
                                     uploader.setRequestHeader('Authorization', 'Client-ID '+IMGUR_CLIENT_ID);    
                                     uploader.send(formData);
+                                    chrome.extension.sendRequest({command: '_trackEvent', eventName: 'download', eventStatus: 'success'}, function(response){});
                                 } else { // xhr.status neq 200
                                     modal.close();
                                     something_went_wrong();
+                                    chrome.extension.sendRequest({command: '_trackEvent', eventName: 'download', eventStatus: 'fail'}, function(response){});
                                 }                                
                             };
                             xhr.open("GET", match[3]);                            
                             xhr.send();
+                            chrome.extension.sendRequest({command: '_trackEvent', eventName: 'click-image', eventStatus: 'clicked'}, function(response){});
                         }
                     });
                 }

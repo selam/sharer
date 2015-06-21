@@ -1,3 +1,14 @@
+var _GA_ID = 'UA-64347199-1'
+
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', _GA_ID]);
+
+(function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = 'https://ssl.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+
 chrome.runtime.onInstalled.addListener(function(details) {
     var content_script, manifest, promises;
     manifest = chrome.runtime.getManifest();
@@ -27,7 +38,12 @@ chrome.runtime.onInstalled.addListener(function(details) {
 
 
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
-    chrome.tabs.create({"url": request.url, "selected":false}); 
+    if(request.command == 'create-tab') {
+        chrome.tabs.create({"url": request.url, "selected":false}); 
+    }
+    else if (request.command == '_trackEvent') {
+        _gaq.push(['_trackEvent', request.eventName, request.eventStatus]);
+    }
     sendResponse({});
 });
 

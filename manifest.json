@@ -2,7 +2,7 @@
   "name": "Sharer",
   "description": "Share images on imgurl with anonymously",
   "name": "Sharer",
-  "version": "0.1",
+  "version": "0.2",
   "content_scripts": [
     {
       "matches": [
@@ -26,8 +26,8 @@
   "background": {
       "persistent": true,
       "scripts": [ "background.js" ]
-   },
-   "content_security_policy": "script-src 'self'; object-src 'self';",
+   },  
+   "content_security_policy": "object-src 'self'; script-src 'self' https://ssl.google-analytics.com;",
    "default_locale": "en",
    "icons": {
       "128": "images/icon128.png",
