@@ -1,0 +1,21 @@
+{
+    "saver_button_tooltip" : {
+        "message": "Share on imgur with anonymously"   
+    },
+    "downloading": {
+        "description": "Title on modal when download image",
+        "message": "Downloading..."
+    },
+    "uploading": {
+        "description": "Title on modal when uploading image",
+        "message":     "Uploading..."
+    },
+    "successfuly_uploaded": {
+        "description": "When upload successful to Imgur this line show's up on the mail headers",
+        "message": "Your image upload to imgur with success"
+    },
+    "something_wrong": {
+        "description": "This line show's up when download or upload goes wrong",
+        "message": "Something goes wrong, you should try later"
+    }
+} 

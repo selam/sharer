@@ -1,0 +1,41 @@
+{
+  "name": "Sharer",
+  "description": "Share images on imgurl with anonymously",
+  "name": "Sharer",
+  "version": "0.1",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://mail.google.com/*",
+        "https://inbox.google.com/*"
+      ],
+      "js": ["inboxsdk.js","content.js"],
+      "css": ["css/bootstrap.css", "css/bootstrap-theme.css"],
+
+      "run_at": "document_end"
+    }
+  ],
+  "permissions": [
+    "https://mail.google.com/",
+    "https://inbox.google.com/",
+    "https://mail-attachment.googleusercontent.com/",
+    "tabs"
+  ],
+  "manifest_version": 2,
+  
+  "background": {
+      "persistent": true,
+      "scripts": [ "background.js" ]
+   },
+   "content_security_policy": "script-src 'self'; object-src 'self';",
+   "default_locale": "en",
+   "icons": {
+      "128": "images/icon128.png",
+      "16": "images/icon16.png",
+      "48": "images/icon48.png"
+   },
+   "web_accessible_resources": [ "images/icon16.png", "images/icon48.png", "images/icon128.png", "images/white_sharer48.png",  "images/x.png"]
+}
+
+
+
