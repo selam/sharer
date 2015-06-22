@@ -8,3 +8,11 @@ When i want to share my photos with world, i send these photos to my gmail accou
 
 # packaging 
 chrome: https://chrome.google.com/webstore/detail/sharer/ppidmnphafnfhdhkniohlbhedpibefno
+
+## Screen shots
+
+<img src="http://i.imgur.com/zVBxuQ7.png" width="320" height="200"/>
+<img src="http://i.imgur.com/hL3NvGG.png" width="320" height="200"/>
+<img src="http://i.imgur.com/RbBKhn5.png" width="320" height="200"/>
+<img src="http://i.imgur.com/y8jTN4I.png" width="320" height="200"/>
+<img src="http://i.imgur.com/Imbnz6C.png" width="320" height="200"/>
